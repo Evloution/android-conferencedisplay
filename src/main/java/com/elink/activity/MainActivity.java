@@ -229,11 +229,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.meeting_create_btn: // 添加议程按钮
+                int position = 0;
                 if ("".equals(meeting_name_text.getText().toString().trim()) || meeting_name_text.getText().toString().trim() == null) {
                     ToastUtil.show(MainActivity.this, "请先创建会议");
                     return;
                 }
-                int position = 0;
+
                 if (dragSortAdapter != null) {
                     position = dragSortAdapter.getCount();
                 }
