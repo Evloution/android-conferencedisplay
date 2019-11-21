@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:dslv="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="#fff"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp">
+
+            <TextView
+                android:id="@+id/meeting_txtx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="我的会议"
+                android:textSize="20sp" />
+
+            <ImageButton
+                android:id="@+id/meeting_setip_imgbtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@id/meeting_end_btn"
+                android:layout_marginRight="20dp"
+                android:background="@mipmap/ip_icon" />
+
+            <ImageButton
+                android:id="@+id/meeting_end_btn"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/null_txt"
+                android:layout_marginRight="15dp"
+                android:background="@null" />
+
+            <TextView
+                android:id="@+id/null_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/meeting_name_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:text="第一次会议"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="#fff"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="会议议程："
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/meeting_create_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/button_royalblue_style"
+            android:drawableLeft="@mipmap/add_agenda_icon"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="添加议程"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <!-- 会议议程显示 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical">
+
+        <!--dslv:click_remove_id="@id/dragsort_listview_item_layout"
+        dslv:remove_enabled="true"
+        dslv:remove_mode="clickRemove"-->
+        <com.elink.view.DragSortListView
+            android:id="@+id/activity_create_meeting_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="#FFFFFF"
+            android:dividerHeight="1dp"
+            android:scrollbars="none"
+            dslv:collapsed_height="1px"
+            dslv:drag_enabled="true"
+            dslv:drag_handle_id="@id/dragsort_listview_item_textview"
+            dslv:drag_scroll_start="0.33"
+            dslv:drag_start_mode="onDown"
+            dslv:float_alpha="0.6"
+            dslv:slide_shuffle_speed="0.3"></com.elink.view.DragSortListView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
+</LinearLayout>
