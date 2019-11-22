@@ -75,7 +75,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private List<AgendaBean> agendaBeanList;
     private List<PersonBean> personBeanList;
 
-
     private MeetingBean meetingBean;
     private AgendaBean agendaBean;
     private int REQUEST_WRITE_EXTERNAL_STORAGE = 101;
@@ -88,8 +87,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     // 判断是否需要补发数据
     private int requestNum = 0;
-    private int requestNums = 0;
 
+    // 定时发送任务
     private Timer timer;
 
     private Gson gson = new Gson();
@@ -229,12 +228,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.meeting_create_btn: // 添加议程按钮
-                int position = 0;
                 if ("".equals(meeting_name_text.getText().toString().trim()) || meeting_name_text.getText().toString().trim() == null) {
                     ToastUtil.show(MainActivity.this, "请先创建会议");
                     return;
                 }
-
+                int position = 0;
                 if (dragSortAdapter != null) {
                     position = dragSortAdapter.getCount();
                 }
@@ -279,8 +277,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             // 保存文件
                             meetingBean.save();
                             initEvent();
-                            // 刷新界面
-                            //dragSortAdapterNotify();
                             show.dismiss();
                             // 发送全部数据
                             sendAllData();
@@ -301,7 +297,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /**
-     *  对议程以及议程的子数据的操作
+     *  对议程以及议程的数据的操作
      *  点击事件主要是删除议程按钮、议程准备按钮、人员进入按钮、人员到齐按钮、添加人员按钮
      * @param v
      */
@@ -364,7 +360,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * @param headText  头部text
      * @param titleText 标题text
      * @param hintText  输入框的text
-     * @param code      判断是哪个按钮
+     * @param code      判断点击的是哪个按钮
      * @param position  添加人员的话传入点击的是第几个数据
      */
     private void addPersonDialog(final String headText, final String titleText, final String hintText, final int code, final int position) {
