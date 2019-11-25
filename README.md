@@ -15,7 +15,7 @@ APP界面：
 
 首页：
 
-<img src="C:\Users\Evloution_\android_space\android_elink_space\conferencedisplay\images\2119F2B39F89DDBF17A44026E63C04E7.png" alt="2119F2B39F89DDBF17A44026E63C04E7" style="zoom:33%;" />
+![]( https://github.com/Evloution/android-conferencedisplay/blob/master/images/2119F2B39F89DDBF17A44026E63C04E7.png )
 
 
 
