@@ -310,6 +310,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.dragsort_listview_item_confirm_btn: // 人员到齐按钮
                 DialogUtil.loadingDialog(this, "发送数据中...");
+                // 判断当前议程有无人员
+                if (agendaBeanList.get(position).getPersonList().size() == 0 || agendaBeanList.get(position).getPersonList() == null) {
+                    DialogUtil.loadingDialogEnd(MainActivity.this);
+                    ToastUtil.show(MainActivity.this, "请先添加人员");
+                    addPersonDialog("请输入参会人员", "参会人员", "", 1, position);
+                    return;
+                }
                 // 判断删除人员按钮是否显示
                 isDelete(position);
                 // 发送本行议程数据到服务器
@@ -317,6 +324,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.dragsort_listview_item_call_btn: // 叫人按钮
                 DialogUtil.loadingDialog(this, "发送数据中...");
+                // 判断当前议程有无人员
+                if (agendaBeanList.get(position).getPersonList().size() == 0 || agendaBeanList.get(position).getPersonList() == null) {
+                    DialogUtil.loadingDialogEnd(MainActivity.this);
+                    ToastUtil.show(MainActivity.this, "请先添加人员");
+                    addPersonDialog("请输入参会人员", "参会人员", "", 1, position);
+                    return;
+                }
                 // 判断删除人员按钮是否显示
                 isDelete(position);
                 // 发送本行议程数据到服务器
@@ -324,14 +338,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.dragsort_listview_item_prepare_btn: // 做准备按钮
                 DialogUtil.loadingDialog(this, "发送数据中...");
-                // 判断当前会议有无人员
+                // 判断当前议程有无人员
                 if (agendaBeanList.get(position).getPersonList().size() == 0 || agendaBeanList.get(position).getPersonList() == null) {
                     DialogUtil.loadingDialogEnd(MainActivity.this);
                     ToastUtil.show(MainActivity.this, "请先添加人员");
                     addPersonDialog("请输入参会人员", "参会人员", "", 1, position);
                     return;
                 }
-
                 //  点击第一条数据时判断会议有没有开始
                 if (position == 0) {
                     if (meetingBean.getMeetingStatus() == 0) {
@@ -439,14 +452,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         L.e("postion-- " + postion);
         switch (view.getId()) {
             case R.id.item_recyclerview_delete_imgbtn:
-                // 发送全部数据
-                sendAllData();
                 agendaBean.getPersonList().remove(postion);
                 if (agendaBean.getPersonList().size() == 0 || agendaBean.getPersonList() == null) {
                     agendaBean.setDisplayPerson(false);
                 }
                 dragSortAdapter.notifyData();
                 meetingBean.save();
+                // 发送全部数据
+                sendAllData();
                 break;
         }
     }
@@ -480,7 +493,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // 证明是开始会议时发送的数据
             map.put("data", meetingBean);
             json = gson.toJson(map);
-            L.e("整体数据：" + json);
         } else if (code == 5) {
             // 会议结束
             json = gson.toJson(map);
@@ -497,8 +509,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             map.put("departmentName", agendaBean.getDepartmentName());
             map.put("personName", personBeanList);
             json = gson.toJson(map);
-            L.e("map转json： " + json);
         }
+        L.e("json数据： " + json);
         aesJson = AESUtil.encryptDataToStr(json, "52957c911899450f98a376a147aac50e");
         L.e("加密数据：" + aesJson);
         RequestBody requestBody = RequestBody.create(MediaType.parse("text/plain;chaset=utf-8"), aesJson);
@@ -648,7 +660,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             // 将发送次数改为0
                             requestNum = 0;
                             // 关闭定时器
-                            timer.cancel();
+                            if (timer != null) {
+                                timer.cancel();
+                            }
                             // 发送全部数据
                             sendAllData();
                         } else if (code == 5) { // 走这里说明是结束会议
@@ -697,6 +711,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             agendaBeanList.get(position).setDisplayPerson(false);
             dragSortAdapterNotify();
         }
+    }
+
+    /**
+     * 判断当前议程有无人员
+     * @param position 议程索引值
+     */
+    private void isHavePersonnel(int position) {
+
     }
 
     /**
@@ -754,9 +776,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     meetingBean.save();
                     // 发送全部数据
                     sendAllData();
-                } else { // 点击的是系统返回按钮
+                } else if (opCode == 3){ // 点击的是系统返回按钮
                     // 隐藏删除人员按钮
                     signOutHideDelete();
+                    requestNum = 0;
+                    if (timer != null) {
+                        timer.cancel();
+                    }
                     finish();
                 }
                 alertDialog.dismiss();

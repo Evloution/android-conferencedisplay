@@ -50,6 +50,8 @@ public class ConferenceRecordActivity extends AppCompatActivity implements View.
     private AlertDialog alertDialog;
     private Gson gson;
 
+    private List<String> listData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,15 +73,8 @@ public class ConferenceRecordActivity extends AppCompatActivity implements View.
 
     private void initData() {
         cancel_iv.setOnClickListener(this);
-        // 读取文件夹下的所有文件名称
-        List<String> listData = FileUtil.getFilesAllName("/sdcard/ConferenceRecords/");
-        L.e("文件目录：" + listData);
 
-        if (listData == null || listData.size() == 0) {
-            no_meetingrecord_img.setVisibility(View.VISIBLE);
-            no_meetingrecord_txt.setVisibility(View.VISIBLE);
-            return;
-        }
+        isDisplayControl();
 
         // 循环取出文件名称和对应的值
         for (int i = 0; i < listData.size(); i++) {
@@ -158,6 +153,19 @@ public class ConferenceRecordActivity extends AppCompatActivity implements View.
         });
     }
 
+    // 判断文件夹下是否有数据
+    private void isDisplayControl() {
+        // 读取文件夹下的所有文件名称
+        listData = FileUtil.getFilesAllName("/sdcard/ConferenceRecords/");
+        L.e("文件目录：" + listData);
+
+        if (listData == null || listData.size() == 0) {
+            no_meetingrecord_img.setVisibility(View.VISIBLE);
+            no_meetingrecord_txt.setVisibility(View.VISIBLE);
+            return;
+        }
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -182,6 +190,7 @@ public class ConferenceRecordActivity extends AppCompatActivity implements View.
                 conferenceRecordAdapter.remove(position);
                 alertDialog.dismiss();
                 ToastUtil.show(ConferenceRecordActivity.this, "删除成功");
+                isDisplayControl();
             }
         });
         // 取消按钮

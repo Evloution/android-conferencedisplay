@@ -3,13 +3,13 @@
 
 系统结构
 
-![图片1](C:\Users\Evloution_\android_space\android_elink_space\conferencedisplay\images\图片1.png)
+![]( [https://github.com/Evloution/android-conferencedisplay/blob/master/images/%E5%9B%BE%E7%89%871.png](https://github.com/Evloution/android-conferencedisplay/blob/master/images/图片1.png) )
 
 
 
 APP界面：
 
-<img src="C:\Users\Evloution_\android_space\android_elink_space\conferencedisplay\images\D5CADA3AC3B32F5C799E77FC8701B286.png" alt="D5CADA3AC3B32F5C799E77FC8701B286" style="zoom:33%;" />
+![]( https://github.com/Evloution/android-conferencedisplay/blob/master/images/D5CADA3AC3B32F5C799E77FC8701B286.png )
 
 
 
