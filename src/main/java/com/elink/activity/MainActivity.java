@@ -165,11 +165,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             L.e("meetingBeanIntent：" + meetingBeanIntent);
             meetingBean = gson.fromJson(meetingBeanIntent, MeetingBean.class);
             meeting_name_text.setText(meetingBean.getMeetingName());
-            L.e("meetingBean：" + meetingBean);
+            L.e("meetingBean：" + meetingBean.getMeetingStatus());
             agendaBeanList = meetingBean.getAgendaBeanList();
             L.e("agendaBeanList：" + agendaBeanList);
             // 判断议程按钮和结束按钮
             isShowCreateAgendaOrEndMeetingBtn();
+            // 如果会议已经开始，进入的时候发送全部数据
+            sendAllData();
+            // 加载数据
             initEvent();
         }
     }
@@ -212,7 +215,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 signOutHideDelete();
                 break;
             case R.id.meeting_end_btn: // 会议结束按钮
-
                 if (meetingBean.getMeetingStatus() == 0) {
                     // 开始会议
                     DialogUtil.loadingDialog(this, "发送数据中...");
